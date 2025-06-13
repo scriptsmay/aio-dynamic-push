@@ -10,11 +10,16 @@ class TelegramBot(PushChannel):
         super().__init__(config)
         self.api_token = str(config.get("api_token", ""))
         self.chat_id = str(config.get("chat_id", ""))
+        # 代理 api 地址
+        self.api_url = str(config.get("api_url", ""))
         if self.api_token == "" or self.chat_id == "":
             log.error(f"【推送_{self.name}】配置不完整，推送功能将无法正常使用")
 
     def push(self, title, content, jump_url=None, pic_url=None, extend_data=None):
-        push_url = f"https://api.telegram.org/bot{self.api_token}/sendMessage"
+        api_url = self.api_url
+        if api_url == "":
+            api_url = "https://api.telegram.org"
+        push_url = f"{api_url}/bot{self.api_token}/sendMessage"
         headers = {
             "Content-Type": "application/json"
         }
