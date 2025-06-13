@@ -26,7 +26,9 @@ class Webhook(PushChannel):
                 "pic_url": pic_url,
                 "extend_data": extend_data
             }
-            response = util.requests_post(push_url, self.name, json=post_data)
+            # log.info(f"【推送_{self.name}】POST数据：{post_data}")
+            response = util.requests_post(push_url, self.name, data=post_data)
+            # log.info(f"【推送_{self.name}】响应：{response.text}")
         else:
             log.error(f"【推送_{self.name}】不支持的请求方法：{self.request_method}")
             return
