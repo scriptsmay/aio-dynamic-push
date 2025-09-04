@@ -11,7 +11,7 @@
 
 ## 简介
 
-一款整合多平台`动态/直播开播提醒`检测与推送的小工具，目前支持以下平台：
+一款整合多平台 `动态/直播开播提醒` 检测与推送的小工具，目前支持以下平台：
 
 - [x] B站
 - [x] 微博
@@ -59,7 +59,8 @@ docker run -d -v [配置文件的绝对路径]/config.yml:/mnt/config.yml nfew/a
 
 | 通道类型          | type             | 推送附带图片  | 说明                                                                                                          |
 |---------------|------------------|:-------:|-------------------------------------------------------------------------------------------------------------|
-| Server酱_Turbo | serverChan_turbo |    ❌    | 🤖方便，不用安装app，免费用户5次/天，适合频率不高的用户<br/>👉https://sct.ftqq.com                                                  |
+| Server酱_Turbo | serverChan_turbo |    ✅    | 🙅‍♀️不推荐，不用安装app，但免费用户5次/天<br/>👉https://sct.ftqq.com                                                       |
+| Server酱_3     | serverChan_3     |    ✅    | 🤔需要安装app<br/>👉https://sc3.ft07.com/                                                                       |
 | 企业微信自建应用      | wecom_apps       |    ✅    | 😢新用户不再推荐，2022年6月20日之后新创建的应用，需要配置可信IP<br/>👉https://work.weixin.qq.com/wework_admin/frame#apps/createApiApp |
 | 企业微信群聊机器人     | wecom_bot        |    ✅    | 🥳推荐，新建群聊添加自定义机器人即可<br/>👉https://developer.work.weixin.qq.com/document/path/99110                          |
 | 钉钉群聊机器人       | dingtalk_bot     |    ✅    | 🥳推荐，新建群聊添加自定义机器人即可，自定义关键词使用"【"<br/>👉https://open.dingtalk.com/document/robots/custom-robot-access         |
@@ -67,10 +68,41 @@ docker run -d -v [配置文件的绝对路径]/config.yml:/mnt/config.yml nfew/a
 | 飞书群聊机器人       | feishu_bot       | ❌(暂不支持) | 🤩推荐，新建群聊添加自定义机器人即可，自定义关键词使用"【"<br/>👉https://open.feishu.cn/document/client-docs/bot-v3/add-custom-bot     |
 | Telegram机器人   | telegram_bot     |    ✅    | 🪜需要自备网络环境<br/>👉https://core.telegram.org/bots                                                             |
 | QQ频道机器人       | qq_bot           |    ✅    | 😢需要自行创建机器人，并启用机器人在频道内发言的权限<br/>👉https://q.qq.com/#/app/create-bot                                         |
+| NapCatQQ      | napcat_qq        |    ✅    | 🐧好用，但需要自行部署 NapCatQQ<br/>👉https://github.com/NapNeko/NapCatQQ                                             |
 | Bark          | bark             |    ❌    | 🍎适合苹果系用户，十分轻量，但没法推送图片<br/>👉https://apps.apple.com/cn/app/id1403753865                                     |
 | Gotify        | gotify           |    ❌    | 🖥️适合自建服务器<br/>👉https://gotify.net                                                                         |
 | Webhook       | webhook          | ✅(POST) | ⚡️通用的方式，请求格式详见附录                                                                                            |
 | 电子邮件          | email            |    ✅    | 📧通用的方式                                                                                                     |
+
+## 本地运行方式
+
+1. （可选，推荐）安装 [uv](https://github.com/astral-sh/uv)
+
+   ```sh
+   # macOS / Linux
+   curl -LsSf https://astral.sh/uv/install.sh | sh
+   
+   # Windows
+   powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"
+   ```
+
+2. 安装依赖
+
+   ```sh
+   # 使用 uv 安装依赖
+   uv sync --locked
+   
+   # 或：使用 pip 安装依赖
+   pip3 install -r requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/simple
+   ```
+
+3. 修改配置文件 [config.yml](./config.yml)
+
+4. 启动项目
+
+   ```sh
+   nohup python3 -u main.py >& aio-dynamic-push.log &
+   ```
 
 ## 开发说明
 
@@ -78,22 +110,6 @@ docker run -d -v [配置文件的绝对路径]/config.yml:/mnt/config.yml nfew/a
 
 - 新增查询任务：详见 `query_task/query_demo.py`
 - 新增推送通道：详见 `push_channel/demo.py`
-
-## 运行环境
-
-- [Python 3](https://www.python.org/)
-
-## 直接启动
-
-#### 1. 填写config.yml配置信息
-
-#### 2.安装第三方库
-
-`pip install -r requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/simple/`
-
-#### 3.启动脚本
-
-`nohup python3 -u main.py >& aio-dynamic-push.log &`
 
 ## 附录
 
@@ -132,7 +148,7 @@ Content-Type: application/json
 }
 ```
 
-## 声明:
+## 声明
 
 - 本仓库发布的`aio-dynamic-push`项目中涉及的任何脚本，仅用于测试和学习研究，禁止用于商业用途
 - `nfe-w` 对任何脚本问题概不负责，包括但不限于由任何脚本错误导致的任何损失或损害

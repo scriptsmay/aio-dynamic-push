@@ -13,7 +13,6 @@ from common.logger import log
 from common.proxy import my_proxy
 from query_task import QueryTask
 
-
 class QueryDouyin(QueryTask):
     def __init__(self, config):
         super().__init__(config)
@@ -207,6 +206,7 @@ class QueryDouyin(QueryTask):
             "browser_name": "Chrome",
             "browser_version": "109.0.0.0",
             "web_rid": f"{user_account}",
+            "a_bogus": "",
         }
         response = util.requests_get(query_url, f"抖音-查询直播状态-{self.name}", headers=headers, params=params, use_proxy=True)
         if util.check_response_is_ok(response):
@@ -232,8 +232,7 @@ class QueryDouyin(QueryTask):
                     return
                 room_datas = data.get('data')
                 if room_datas is None or len(room_datas) == 0:
-                    log.error(f"【抖音-查询直播状态-{self.name}】【{user_account}】未开通直播间，停止检测")
-                    self.douyin_id_list.remove(user_account)
+                    log.error(f"【抖音-查询直播状态-{self.name}】【{user_account}】疑似未开通直播间，跳过本次检测")
                     return
                 try:
                     room_data = room_datas[0]

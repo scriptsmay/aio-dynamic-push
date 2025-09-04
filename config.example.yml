@@ -42,7 +42,7 @@ query_task:
     # 是否跳过提醒"转发"类型的动态 true/false
     skip_forward: true
     # 如果请求提示 -352, 可以填入下面两项之一, 建议使用 payload 自动获取buvid3
-    # cookie，可以一定程度防ban，建议用小号的，貌似无痕窗口不登录时拿到的cookie也能用，优先级高于自动获取buvid3
+    # cookie，可选，配置后可以一定程度防ban，建议用小号的，貌似无痕窗口不登录时拿到的cookie也能用，优先级高于自动获取buvid3
     cookie: ""
     # 浏览器指纹，取自于 /x/internal/gaia-gateway/ExClimbWuzhi 接口的body，需要填入的是payload参数的value，用于自动获取并激活buvid3
     payload: ""
@@ -76,6 +76,8 @@ query_task:
     profile_id_list:
       - 52d8c541b4c4d60e6c867480
       - 5bf64788aa4b0a000114b879
+    # cookie，可选，配置后可以一定程度防ban，建议用小号的
+    cookie: ""
   - name: 任务_douyin
     enable: false
     type: douyin
@@ -135,10 +137,18 @@ push_channel:
   - name: 推送通道_Server酱_Turbo
     # 是否启用 true/false
     enable: false
-    # 通道类型，serverChan_turbo/wecom_apps/dingtalk_bot/feishu_apps/feishu_bot/bark/webhook
+    # 通道类型，详见 README.md
     type: serverChan_turbo
     # Server酱_Turbo推送服务，如果启用该推送，必须填入，获取参考 https://sct.ftqq.com
     send_key:
+  - name: 推送通道_Server酱_3
+    enable: false
+    type: serverChan_3
+    # Server酱_3的参数 ，如果启用该推送，必须填入，获取参考 https://sc3.ft07.com
+    send_key:
+    uid:
+    # 消息标签，非必填，多个标签使用竖线分隔，例如：标签1|标签2
+    tags:
   - name: 推送通道_企业微信应用
     enable: false
     type: wecom_apps
@@ -202,6 +212,18 @@ push_channel:
         channel_name_list:
           - "子频道21"
           - "子频道22"
+  - name: 推送通道_NapCatQQ
+    enable: false
+    type: napcat_qq
+    # NapCatQQ 的 HTTP 服务器地址
+    api_url: http://localhost:3000
+    # 接口Token
+    token:
+    # user_id 与 group_id 二选一，user_id 为用户 QQ 号，group_id 为群号
+    user_id:
+    group_id:
+    # 需要 @ 的 QQ 号，仅能填写 1 个，"all" 表示@全体成员
+    at_qq: "all"
   - name: 推送通道_Bark
     enable: false
     type: bark
